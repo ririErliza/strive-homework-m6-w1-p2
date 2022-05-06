@@ -1,0 +1,60 @@
+-----Placed "type": "module" at the wrong place will throw error-----
+{
+  "name": "strive-homework-m6-w1-p2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "type": "module",
+    "dev": "nodemon -r dotenv/config ./src/server.js"
+  }
+
+------The correct way:------
+  {
+  "name": "strive-homework-m6-w1-p2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config ./src/server.js"
+  }
+  
+}
+
+--------------------------------------------------------------------------------------------------------------
+the error message:
+
+$ npm run dev
+
+> strive-homework-m6-w1-p2@1.0.0 dev
+> nodemon -r dotenv/config ./src/server.js
+
+[nodemon] 2.0.16
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node -r dotenv/config ./src/server.js`
+(node:12516) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\src\server.js:1
+import express from 'express';
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47
+[nodemon] app crashed - waiting for file changes before starting...
+
+
+----------------------------------------------------------------------------------------------------------------
