@@ -5,14 +5,14 @@
 // 5. DELETE 
 
 import express from "express";
-import postsModel from "./model.js"
+import postsModel from "./model.js";
 import createError from "http-errors";
-
+import { checkUserMiddleware, checkValidationResult } from "./validation.js"
 
 const postsRouter = express.Router()
 
 //1.
-postsRouter.post("/", async (req,res,next)=>{
+postsRouter.post("/", checkUserMiddleware, checkValidationResult, async (req,res,next)=>{
     try {
         console.log("REQUEST BODY: ", req.body)
 
