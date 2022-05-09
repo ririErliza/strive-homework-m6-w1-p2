@@ -6,6 +6,7 @@
 
 import express from "express";
 import postsModel from "./model.js"
+import createError from "http-errors";
 
 
 const postsRouter = express.Router()
@@ -41,8 +42,13 @@ postsRouter.get("/", async (req,res,next)=>{
 //3.
 postsRouter.get("/:id", async (req,res,next)=>{
     try {
-        const Post = await postsModel.findById(req.params.id)
-        res.send(Post)
+        const posts = await postsModel.findById(req.params.id)
+        if(posts){
+            res.send(posts)
+        }else{
+            next(createError(404, `Sorry, Cannot find Post with id ${req.params.id}!`))
+        }
+        
     } catch (error) {
         next(error)
     }
@@ -57,8 +63,11 @@ postsRouter.put("/:id", async (req,res,next)=>{
         req.body, // HOW
         { new: true } // OPTIONS (if you want to obtain the updated Post you should specify new: true)
         )
-        res.send(updatedPost)
-    
+        if(updatedPost){
+            res.send(updatedPost)
+        }else{
+            next(createError(404, `Sorry, Cannot find Post with id ${req.params.id}!`)) 
+        }
     } catch (error) {
         next(error)
     }
@@ -67,8 +76,13 @@ postsRouter.put("/:id", async (req,res,next)=>{
 //5.
 postsRouter.delete("/:id", async (req,res,next)=>{
     try {
-        await postsModel.findByIdAndDelete(req.params.id)
-        res.status(204).send()
+        const deletedPost = await postsModel.findByIdAndDelete(req.params.id)
+        if(deletedPost){
+            res.status(204).send()
+        }else{
+            next(createError(404, `Sorry, Cannot find Post with id ${req.params.id}!`)) 
+        }
+        
     } catch (error) {
         next(error)
     }
