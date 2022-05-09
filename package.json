@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ririErliza/strive-homework-m6-w1-p2#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "express-list-endpoints": "^6.0.0",
     "mongoose": "^6.3.2"
