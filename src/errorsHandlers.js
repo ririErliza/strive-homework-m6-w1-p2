@@ -1,3 +1,5 @@
+import mongoose from "mongoose"
+
 export const badRequestHandler = (err, req, res, next) => {
   if (err.status === 400) {
     // If the error received has status of 400, I am responsible of sending a response, otherwise I'm sending the error to who comes next
@@ -26,7 +28,7 @@ export const forbiddenHandler = (err, req, res, next) => {
 } // 403s
 
 export const notFoundHandler = (err, req, res, next) => {
-  if (err.status === 404) {
+  if (err.status === 404 || err instanceof mongoose.CastError) {
     // If the error received has status of 404, I am responsible of sending a response, otherwise I'm sending the error to who comes next
     res.status(404).send({ message: err.message, status: "error" })
   } else {

@@ -58,3 +58,69 @@ SyntaxError: Cannot use import statement outside a module
 
 
 ----------------------------------------------------------------------------------------------------------------
+
+Cast Error
+
+why is this happening?
+because i put the wrong ID on postman, adding 1 more character, it becomes 13 characters.
+on postman shown generic error 500 instead of error 404.
+it supposed to show error 404 because the fault is on the user who put wrong ID.
+
+solved by adding this to errorHandler:
+err instanceof mongoose.CastError
+
+it will look like this:
+export const notFoundHandler = (err, req, res, next) => {
+  if (err.status === 404 || err instanceof mongoose.CastError) {
+    // If the error received has status of 404, I am responsible of sending a response, otherwise I'm sending the error to who comes next
+    res.status(404).send({ message: err.message, status: "error" })
+  } else {
+    next(err)
+  }
+} // 404s
+
+CastError: Cast to ObjectId failed for value "627561751280d3291b7f43bdZ" (type string) at path "_id" for model "Post"
+    at model.Query.exec (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:4716:21)
+    at model.Query.Query.then (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:4815:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5) {
+  messageFormat: undefined,
+  stringValue: '"627561751280d3291b7f43bdZ"',
+  kind: 'ObjectId',
+  value: '627561751280d3291b7f43bdZ',
+  path: '_id',
+  reason: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer
+      at new BSONTypeError (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\bson\lib\error.js:41:28)
+      at new ObjectId (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\bson\lib\objectid.js:66:23) 
+      at castObjectId (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\cast\objectid.js:24:12)
+      at ObjectId.cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schema\objectid.js:245:12)
+      at ObjectId.SchemaType.applySetters (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1189:12)
+      at ObjectId.SchemaType._castForQuery (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1623:15)
+      at ObjectId.SchemaType.castForQuery (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1613:15)
+      at ObjectId.SchemaType.castForQueryWrapper (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1590:20)
+      at cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\cast.js:344:32)        
+      at model.Query.Query.cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:5138:12),
+  valueType: 'string'
+}
+Incoming request --> GET -- Mon May 09 2022 21:06:30 GMT+0200 (Central European Summer Time)
+CastError: Cast to ObjectId failed for value "627561751280d3291b7f43bi" (type string) at path "_id" for model "Post"
+    at model.Query.exec (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:4716:21)
+    at model.Query.Query.then (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:4815:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5) {
+  messageFormat: undefined,
+  stringValue: '"627561751280d3291b7f43bi"',
+  kind: 'ObjectId',
+  value: '627561751280d3291b7f43bi',
+  path: '_id',
+  reason: BSONTypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer
+      at new BSONTypeError (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\bson\lib\error.js:41:28)
+      at new ObjectId (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\bson\lib\objectid.js:66:23) 
+      at castObjectId (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\cast\objectid.js:24:12)
+      at ObjectId.cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schema\objectid.js:245:12)
+      at ObjectId.SchemaType.applySetters (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1189:12)
+      at ObjectId.SchemaType._castForQuery (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1623:15)
+      at ObjectId.SchemaType.castForQuery (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1613:15)
+      at ObjectId.SchemaType.castForQueryWrapper (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\schematype.js:1590:20)
+      at cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\cast.js:344:32)        
+      at model.Query.Query.cast (C:\Users\erliz\OneDrive\Desktop\Homework\Back-end\strive-homework-m6-w1-p2\node_modules\mongoose\lib\query.js:5138:12),
+  valueType: 'string'
+}
